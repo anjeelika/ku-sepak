@@ -19,7 +19,7 @@ class Product(models.Model):
     stock = models.IntegerField(default=0, validators=[MinValueValidator(0)])
     description = models.TextField()
     thumbnail = models.URLField(blank=True, null=True)
-    category = models.CharField(choices=CATEGORY_CHOICES, default='ball')
+    category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default='ball')
     is_featured = models.BooleanField(default=False)
 
     def __str__(self):
