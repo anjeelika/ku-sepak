@@ -1,6 +1,17 @@
-{% load static %}
+function rupiah(n){ return "Rp" + Number(n||0).toLocaleString("id-ID"); }
 
-<div class="h-full flex flex-col">
+function renderProductCard(p) {
+  // p.user dari API = username pemilik (lihat product_to_dict di views)
+  const isOwner = (window.IS_AUTH && p.user === window.CURRENT_USER);
+  const thumb = (p.thumbnail && p.thumbnail.trim())
+    ? p.thumbnail
+    : "https://placehold.co/600x400?text=No+Image";
+
+  const wrap = document.createElement("div");
+  wrap.className = "h-full flex flex-col";
+
+  wrap.innerHTML = `
+  <div class="h-full flex flex-col">
   <article
     class="relative bg-white rounded-2xl border border-gray-200 hover:shadow-lg transition-shadow duration-300 overflow-hidden
            h-[320px] flex flex-col">
@@ -81,4 +92,7 @@
       View Details
     </a>
   </div>
-</div>
+</div>`;
+
+  return wrap;
+}
