@@ -154,6 +154,13 @@ def api_products_list_create(request):
 @csrf_protect
 def api_product_detail_update_delete(request, id):
     obj = get_object_or_404(Product, pk=id)
+    
+    # Check if user owns the product
+    if obj.user != request.user:
+        return JsonResponse({
+            "ok": False, 
+            "errors": {"permission": ["You do not have permission to modify this product."]}
+        }, status=403)
 
     if request.method == "GET":
         return JsonResponse({"ok": True, "item": product_to_dict(obj)})
@@ -165,7 +172,9 @@ def api_product_detail_update_delete(request, id):
             form = ProductsForm(data, instance=obj)
             form.is_bound = True  
         if form.is_valid():
-            form.save()
+            product = form.save(commit=False)
+            product.user = request.user  # Ensure user ownership is preserved
+            product.save()
             return JsonResponse({"ok": True, "item": product_to_dict(obj)})
         return JsonResponse({"ok": False, "errors": form.errors}, status=400)
 

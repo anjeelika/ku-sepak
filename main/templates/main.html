@@ -14,7 +14,7 @@
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 bg-white rounded-lg border border-gray-200 p-4">
       <div class="flex space-x-3 mb-4 sm:mb-0">
         <button id="filter-all"
-          class="px-4 py-2 rounded-md font-medium transition-colors bg-[#be7919] text-white hover:bg-[#a45b19]">
+          class="px-4 py-2 rounded-md font-medium transition-colors bg-[#be7919] text-white hover:bg-[#a45b19] hover:text-white">
           All Products
         </button>
         <button id="filter-my"
@@ -62,57 +62,118 @@
 </div>
 
 <!-- Modal: Create/Edit Product -->
-<div id="modal-product" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-  <div class="bg-white rounded-lg w-11/12 sm:w-2/3 lg:w-1/2 p-6 relative">
-    <h2 id="modal-title" class="text-xl font-semibold mb-4">Create Product</h2>
-    <form id="form-product" class="space-y-4">
-      <input type="hidden" id="product-id">
-      <div>
-        <label class="block text-sm font-medium">Name</label>
-        <input id="product-name" type="text" class="w-full border-gray-300 rounded-md">
+<div id="modal-product" class="fixed inset-0 bg-black bg-opacity-50 hidden items-start justify-center z-50 p-4 sm:p-6 overflow-y-auto">
+  <div class="relative bg-white rounded-lg border border-gray-200 w-11/12 sm:w-2/3 lg:w-1/2 max-w-3xl mx-auto my-8 form-style">
+    <div class="p-6 sm:p-8">
+      <!-- Header -->
+      <div class="mb-8">
+        <h1 id="modal-title" class="text-2xl font-bold text-gray-900 mb-2">Create Product</h1>
+        <p class="text-gray-600" id="modal-subtitle">Add a new product to your store</p>
       </div>
-      <div class="grid grid-cols-2 gap-4">
+      
+      <form onsubmit="return handleSubmit(event)" class="space-y-6">
+        <input type="hidden" id="product-id">
+        
+        <!-- Name -->
         <div>
-          <label class="block text-sm font-medium">Price</label>
-          <input id="product-price" type="number" min="0" class="w-full border-gray-300 rounded-md">
+          <label for="product-name" class="block text-sm font-medium text-gray-700 mb-2">Name</label>
+          <div class="w-full">
+            <input id="product-name" 
+                   type="text" 
+                   required 
+                   placeholder="Enter product name"
+                   class="w-full rounded-md border-gray-300 shadow-sm focus:border-[#be7919] focus:ring focus:ring-[#be7919] focus:ring-opacity-20 transition-colors">
+          </div>
         </div>
-        <div>
-          <label class="block text-sm font-medium">Stock</label>
-          <input id="product-stock" type="number" min="0" class="w-full border-gray-300 rounded-md">
-        </div>
-      </div>
-      <div>
-        <label class="block text-sm font-medium">Description</label>
-        <textarea id="product-description" class="w-full border-gray-300 rounded-md"></textarea>
-      </div>
-      <div>
-        <label class="block text-sm font-medium">Thumbnail URL</label>
-        <input id="product-thumbnail" type="url" class="w-full border-gray-300 rounded-md">
-      </div>
-      <div>
-        <label class="block text-sm font-medium">Category</label>
-        <select id="product-category" class="w-full border-gray-300 rounded-md">
-          <option value="ball">Ball</option>
-          <option value="shoes">Shoes</option>
-          <option value="jersey">Jersey & Apparel</option>
-          <option value="accessories">Accessories</option>
-          <option value="bag">Bags</option>
-        </select>
-      </div>
-      <div class="flex items-center">
-        <input id="product-featured" type="checkbox" class="mr-2">
-        <label for="product-featured" class="text-sm">Featured product</label>
-      </div>
 
-      <div class="flex justify-end space-x-3 mt-6">
-        <button type="button" id="btn-cancel"
-          class="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-100">Cancel</button>
-        <button type="submit"
-          class="px-4 py-2 bg-[#be7919] text-white rounded-md hover:bg-[#a45b19] transition-colors">
-          Save
-        </button>
-      </div>
-    </form>
+        <!-- Price & Stock -->
+        <div class="grid grid-cols-2 gap-6">
+          <div>
+            <label for="product-price" class="block text-sm font-medium text-gray-700 mb-2">Price</label>
+            <div class="w-full">
+              <input id="product-price" 
+                     type="number" 
+                     min="0" 
+                     required 
+                     placeholder="Rp 0"
+                     class="w-full rounded-md border-gray-300 shadow-sm focus:border-[#be7919] focus:ring focus:ring-[#be7919] focus:ring-opacity-20 transition-colors">
+            </div>
+          </div>
+          <div>
+            <label for="product-stock" class="block text-sm font-medium text-gray-700 mb-2">Stock</label>
+            <div class="w-full">
+              <input id="product-stock" 
+                     type="number" 
+                     min="0" 
+                     required 
+                     placeholder="0"
+                     class="w-full rounded-md border-gray-300 shadow-sm focus:border-[#be7919] focus:ring focus:ring-[#be7919] focus:ring-opacity-20 transition-colors">
+            </div>
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div>
+          <label for="product-description" class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+          <div class="w-full">
+            <textarea id="product-description" 
+                      required 
+                      rows="4"
+                      placeholder="Enter product description"
+                      class="w-full rounded-md border-gray-300 shadow-sm focus:border-[#be7919] focus:ring focus:ring-[#be7919] focus:ring-opacity-20 transition-colors"></textarea>
+          </div>
+        </div>
+
+        <!-- Thumbnail URL -->
+        <div>
+          <label for="product-thumbnail" class="block text-sm font-medium text-gray-700 mb-2">Thumbnail URL</label>
+          <div class="w-full">
+            <input id="product-thumbnail" 
+                   type="url" 
+                   placeholder="https://"
+                   class="w-full rounded-md border-gray-300 shadow-sm focus:border-[#be7919] focus:ring focus:ring-[#be7919] focus:ring-opacity-20 transition-colors">
+          </div>
+          <p class="mt-1 text-sm text-gray-500">Optional: Add an image URL for your product</p>
+        </div>
+
+        <!-- Category -->
+        <div>
+          <label for="product-category" class="block text-sm font-medium text-gray-700 mb-2">Category</label>
+          <div class="w-full">
+            <select id="product-category" 
+                    required 
+                    class="w-full rounded-md border-gray-300 shadow-sm focus:border-[#be7919] focus:ring focus:ring-[#be7919] focus:ring-opacity-20 transition-colors">
+              <option value="ball">Ball</option>
+              <option value="shoes">Shoes</option>
+              <option value="jersey">Jersey & Apparel</option>
+              <option value="accessories">Accessories</option>
+              <option value="bag">Bags</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Featured -->
+        <div class="flex items-center">
+          <input id="product-featured" 
+                 type="checkbox" 
+                 class="rounded border-gray-300 text-[#be7919] focus:border-[#be7919] focus:ring focus:ring-[#be7919] focus:ring-opacity-20 transition-colors">
+          <label for="product-featured" class="ml-2 text-sm text-gray-700">Featured product</label>
+        </div>
+
+        <!-- Buttons -->
+        <div class="flex flex-col sm:flex-row gap-4 pt-6 border-t border-gray-200">
+          <button type="button" 
+                  onclick="closeModal()"
+                  class="order-2 sm:order-1 px-6 py-3 border border-gray-300 text-gray-700 rounded-md font-medium hover:bg-gray-50 transition-colors text-center">
+            Cancel
+          </button>
+          <button type="submit"
+                  class="order-1 sm:order-2 flex-1 bg-[#be7919] text-white px-6 py-3 rounded-md font-medium hover:bg-[#a45b19] transition-colors">
+            <span id="submit-text">Create Product</span>
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
 

@@ -7,8 +7,7 @@
 
     <!-- Overlay link: seluruh badan card klik ke detail -->
     <a href="{% url 'main:show_product' product.id %}"
-       class="absolute inset-0 z-10 pointer-events-none"
-       aria-label="Open details"></a>
+       class="absolute inset-0 z-10 pointer-events-none" aria-label="Open details"></a>
 
     <!-- Thumbnail -->
     <div class="relative h-44 sm:h-48 bg-gray-200 overflow-hidden">
@@ -29,14 +28,12 @@
       {% if user.is_authenticated and product.user == user %}
         <div class="absolute top-3 right-3 z-30 flex items-center gap-2">
           <a href="{% url 'main:edit_product' product.id %}"
-             class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-white/95 hover:bg-[#fdfbed]
-                    shadow ring-1 ring-gray-200 transition pointer-events-auto"
+             class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-white/95 hover:bg-[#fdfbed] shadow ring-1 ring-gray-200 transition pointer-events-auto"
              aria-label="Edit">
             <img src="{% static 'icons/edit.png' %}" alt="Edit" class="w-5 h-5">
           </a>
           <a href="{% url 'main:delete_product' product.id %}"
-             class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-red-50 hover:bg-red-100
-                    shadow ring-1 ring-gray-200 transition pointer-events-auto"
+             class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-red-50 hover:bg-red-100 shadow ring-1 ring-gray-200 transition pointer-events-auto"
              aria-label="Delete">
             <img src="{% static 'icons/trash.png' %}" alt="Delete" class="w-5 h-5">
           </a>
@@ -49,8 +46,7 @@
 
       <!-- Category chip (atas, kiri) -->
       <div class="mb-2">
-        <span
-          class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-[#f9f2cc] text-[#6e3c19]">
+        <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-[#f9f2cc] text-[#6e3c19]">
           {{ product.get_category_display }}
         </span>
       </div>
@@ -70,14 +66,16 @@
           <span class="text-red-600 font-medium">Stok habis</span>
         {% endif %}
       </div>
+
+      <!-- (Deskripsi dihapus sesuai request) -->
+
     </div>
   </article>
 
   <!-- Detached pill button -->
   <div class="w-full flex justify-center mt-3">
     <a href="{% url 'main:show_product' product.id %}"
-       class="inline-flex px-6 py-2 rounded-full bg-white border border-[#f2e395]
-              text-[#a45b19] hover:bg-[#fdfbed] font-medium transition">
+       class="inline-flex px-6 py-2 rounded-full bg-white border border-[#f2e395] text-[#a45b19] hover:bg-[#fdfbed] font-medium transition">
       View Details
     </a>
   </div>
