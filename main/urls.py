@@ -12,6 +12,8 @@ from main.views import (
     api_login,
     api_register,
     api_logout,
+
+    proxy_image, create_product_flutter, products_flutter
 )
 
 app_name = 'main'
@@ -41,4 +43,9 @@ urlpatterns = [
     path('api/login/', api_login, name='api_login'),
     path('api/register/', api_register, name='api_register'),
     path('api/logout/', api_logout, name='api_logout'),
+
+    
+    path('proxy-image/', proxy_image, name='proxy_image'),
+    path('create-flutter/', create_product_flutter, name='create_product_flutter'),
+    path("products-flutter/", products_flutter, name="products_flutter"),
 ]
